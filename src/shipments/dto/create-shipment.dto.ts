@@ -2,28 +2,37 @@ import {
     IsString,
     IsNotEmpty,
     IsEmail,
-    IsPhoneNumber,
     IsArray,
     ValidateNested,
     IsDateString,
-    IsNumber
+    IsNumber,
+    Min
   } from 'class-validator';
-  import { Type } from 'class-transformer';
+import { Type } from 'class-transformer';
+import { Matches } from 'class-validator';
   
   class PackageDto {
     @IsString()
     content: string;
   
     @IsNumber()
+    @IsNotEmpty()
+    @Min(0.1)
     weight: number;
   
     @IsNumber()
+    @IsNotEmpty()
+    @Min(0.1)
     length: number;
-  
+
     @IsNumber()
+    @IsNotEmpty()
+    @Min(0.1)
     height: number;
   
     @IsNumber()
+    @IsNotEmpty()
+    @Min(0.1)
     width: number;
   }
   
@@ -43,9 +52,13 @@ import {
     @IsEmail()
     email: string;
   
-    @IsPhoneNumber()
+    @IsString()
+    @Matches(/^\+503\d{8}$/, {
+      message: 'El teléfono debe tener formato +503XXXXXXXX',
+    })
     phone: string;
-  
+    
+    
     @IsString()
     deliveryAddress: string;
   

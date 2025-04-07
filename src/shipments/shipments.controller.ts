@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { ShipmentsService } from './shipments.service';
 import { CreateShipmentDto } from './dto/create-shipment.dto';
 
@@ -6,14 +6,8 @@ import { CreateShipmentDto } from './dto/create-shipment.dto';
 export class ShipmentsController {
   constructor(private readonly shipmentsService: ShipmentsService) {}
 
-  //  Prueba básica para saber si el backend está vivo
-  @Get('ping')
-  ping() {
-    return { status: 'OK 🟢 Postman funciona' };
-  }
-
-  //  Crea un nuevo envío
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   create(@Body() createShipmentDto: CreateShipmentDto) {
     return this.shipmentsService.create(createShipmentDto);
   }
