@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Shipment {
+  id                   String     @id @default(auto()) @map("_id") @db.ObjectId
+  pickupAddress        String     // Dirección de recolección
+  scheduledDate        DateTime   // Fecha programada
+  firstName            String
+  lastName             String
+  email                String
+  phone                String
+  deliveryAddress      String     // Dirección del destinatario
+  department           String
+  municipality         String
+  referencePoint       String     // Punto de referencia
+  instructions         String     // Indicaciones
+  packages             Package[]
+  createdAt            DateTime   @default(now())
+}
+
+type Package {
+  content  String
+  weight   Float
+  length   Float
+  height   Float
+  width    Float
+}
